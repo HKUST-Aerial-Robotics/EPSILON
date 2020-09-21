@@ -1,0 +1,210 @@
+#include "common/trajectory/trajectory_optimizer.h"
+
+#include "common/basics/tool_func.h"
+#include "common/state/state.h"
+// use ceres auto diff to optimize the trajectory
+#include "ceres/ceres.h"
+namespace common {
+
+// ceres functions
+using ceres::AutoDiffCostFunction;
+using ceres::CENTRAL;
+using ceres::CostFunction;
+using ceres::NumericDiffCostFunction;
+using ceres::Problem;
+using ceres::Solve;
+using ceres::Solver;
+
+// struct
+struct FrenetJerkFunctor {
+  FrenetJerkFunctor(FrenetTrajectory* traj, int dim, double w)
+      : traj_(traj), dim_(dim), w_(w) {}
+
+  /* override operator */
+  bool operator()(const double* const x, double* residual) const {
+    std::vector<decimal_t> variables;
+    variables.resize(dim_);
+    for (int i = 0; i < dim_; i++) variables[i] = x[i];
+    traj_->set_variables(variables);
+
+    decimal_t j_lon = 0.0, j_lat = 0.0;
+    traj_->Jerk(&j_lon, &j_lat);
+    residual[0] = w_ * (j_lon + j_lat);
+    return true;
+  }
+
+ private:
+  FrenetTrajectory* traj_;
+  const int dim_;
+  const double w_;
+};
+
+struct StateConstraintFunctor {
+  StateConstraintFunctor(FrenetTrajectory* traj, int dim, double w,
+                         const common::State& state)
+      : traj_(traj), dim_(dim), w_(w), state_(state) {}
+
+  /* override operator */
+  bool operator()(const double* const x, double* residual) const {
+    std::vector<decimal_t> variables;
+    variables.resize(dim_);
+    for (int i = 0; i < dim_; i++) variables[i] = x[i];
+    traj_->set_variables(variables);
+    common::State s;
+    traj_->GetState(state_.time_stamp, &s);
+    residual[0] = w_ * ((state_.vec_position - s.vec_position).norm() +
+                        pow(state_.velocity - s.velocity, 2) +
+                        pow(state_.acceleration - s.acceleration, 2) +
+                        pow(state_.curvature - s.curvature, 2));
+    return true;
+  }
+
+ private:
+  FrenetTrajectory* traj_;
+  const int dim_;
+  const double w_;
+  decimal_t stamp_;
+  common::State state_;
+};
+
+struct CurvatureCostFunctor {
+  CurvatureCostFunctor(FrenetTrajectory* traj, int dim, double w,
+                       const std::vector<decimal_t>& t_samples)
+      : traj_(traj), dim_(dim), w_(w), t_samples_(t_samples) {}
+
+  /* override operator */
+  bool operator()(const double* const x, double* residual) const {
+    std::vector<decimal_t> variables;
+    variables.resize(dim_);
+    for (int i = 0; i < dim_; i++) variables[i] = x[i];
+    traj_->set_variables(variables);
+    common::State state;
+    residual[0] = 0.0;
+    for (auto& t : t_samples_) {
+      traj_->GetState(t, &state);
+      residual[0] += w_ * state.curvature * state.curvature;
+    }
+    return true;
+  }
+
+ private:
+  FrenetTrajectory* traj_;
+  const int dim_;
+  const double w_;
+  std::vector<decimal_t> t_samples_;
+};
+
+struct LateralAccCostFunctor {
+  LateralAccCostFunctor(FrenetTrajectory* traj, int dim, double w,
+                        const std::vector<decimal_t>& t_samples)
+      : traj_(traj), dim_(dim), w_(w), t_samples_(t_samples) {}
+
+  /* override operator */
+  bool operator()(const double* const x, double* residual) const {
+    std::vector<decimal_t> variables;
+    variables.resize(dim_);
+    for (int i = 0; i < dim_; i++) variables[i] = x[i];
+
+    for (auto& x : variables) {
+      printf("x %lf.\n", x);
+    }
+
+    traj_->set_variables(variables);
+    common::State state;
+    residual[0] = 0.0;
+    for (auto& t : t_samples_) {
+      traj_->GetState(t, &state);
+      printf("curvature %lf.\n", state.curvature);
+      residual[0] +=
+          w_ * pow(state.curvature * state.velocity * state.velocity, 2);
+    }
+    return true;
+  }
+
+ private:
+  FrenetTrajectory* traj_;
+  const int dim_;
+  const double w_;
+  std::vector<decimal_t> t_samples_;
+};
+
+ErrorType TrajectoryOptimizer::Optimize(FrenetTrajectory* traj_in) {
+  if (traj_in == nullptr) return kWrongStatus;
+  std::vector<decimal_t> variables = traj_in->variables();
+  std::vector<decimal_t> variables_backup = traj_in->variables();
+
+  for (auto& x : variables) {
+    printf("x %lf.\n", x);
+  }
+
+  const int dim = 12;
+  const decimal_t delta_t = 0.2;
+  std::vector<decimal_t> t_samples;
+  common::GetRangeVector<decimal_t>(traj_in->begin(), traj_in->end(), delta_t,
+                                    true, &t_samples);
+  /* ---------------------  CERES ----------------------------*/
+  Problem problem;
+  CostFunction* curvature_cost_func =
+      new NumericDiffCostFunction<CurvatureCostFunctor, ceres::CENTRAL,
+                                  1, /* number of residual */
+                                  dim /* dim of x*/>(
+          new CurvatureCostFunctor(traj_in, dim, 1.0, t_samples));
+  problem.AddResidualBlock(curvature_cost_func, NULL, variables.data());
+
+  CostFunction* lat_acc_cost_func =
+      new NumericDiffCostFunction<LateralAccCostFunctor, ceres::CENTRAL,
+                                  1, /* number of residual */
+                                  dim /* dim of x*/>(
+          new LateralAccCostFunctor(traj_in, dim, 1.0, t_samples));
+  problem.AddResidualBlock(curvature_cost_func, NULL, variables.data());
+
+  CostFunction* jerk_cost_func =
+      new NumericDiffCostFunction<FrenetJerkFunctor, ceres::CENTRAL,
+                                  1, /* number of residual */
+                                  dim /* dim of x*/>(
+          new FrenetJerkFunctor(traj_in, dim, 1.0));
+  problem.AddResidualBlock(jerk_cost_func, NULL, variables.data());
+
+  common::State state_begin, state_end;
+  traj_in->GetState(traj_in->begin(), &state_begin);
+  traj_in->GetState(traj_in->end(), &state_end);
+
+  CostFunction* start_state_func =
+      new NumericDiffCostFunction<StateConstraintFunctor, ceres::CENTRAL,
+                                  1, /* number of residual */
+                                  dim /* dim of x*/>(
+          new StateConstraintFunctor(traj_in, dim, 10.0, state_begin));
+  problem.AddResidualBlock(start_state_func, NULL, variables.data());
+  CostFunction* end_state_func =
+      new NumericDiffCostFunction<StateConstraintFunctor, ceres::CENTRAL,
+                                  1, /* number of residual */
+                                  dim /* dim of x*/>(
+          new StateConstraintFunctor(traj_in, dim, 1.0, state_end));
+  problem.AddResidualBlock(end_state_func, NULL, variables.data());
+  Solver::Options options;
+  options.gradient_check_numeric_derivative_relative_step_size = 1e-4;
+  // options.linear_solver_type         = ceres::DENSE_SCHUR;
+  // options.trust_region_strategy_type = ceres::DOGLEG;
+  options.max_num_iterations = 10;
+  // options.minimizer_progress_to_stdout = true;
+  Solver::Summary summary;
+  Solve(options, &problem, &summary);
+  // std::cout   << "Iterations :"
+  //             << static_cast<int>(summary.iterations.size())
+  //             << std::endl;
+  // std::cout << "---[OptKernel]solution cost: " << summary.final_cost
+  //           << std::endl;
+  std::cout << summary.FullReport() << "\n";
+  std::cout << "-------------------------------------------" << std::endl;
+
+  if (!summary.IsSolutionUsable()) {
+    traj_in->set_variables(variables_backup);
+    return kWrongStatus;
+  }
+
+  /* ---------------------- END ------------------------------ */
+  traj_in->set_variables(variables);
+  return kSuccess;
+}
+
+}  // namespace common

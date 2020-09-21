@@ -1,0 +1,26 @@
+<launch>
+  <arg name="arena_info_topic" value="/arena_info" />
+  <arg name="arena_info_static_topic" value="/arena_info_static" />
+  <arg name="arena_info_dynamic_topic" value="/arena_info_dynamic" />
+
+  <arg name="global_desired_vel" value = "10.0" />
+  <arg name="global_autonomous_level" value = "3" />
+  <!-- <arg name="playground" value = "ggl_v2.0" /> -->
+  <!-- <arg name="playground" value = "highway_v1.0" /> -->
+  <!-- <arg name="playground" value = "ring_tiny_v1.0" /> -->
+  <!-- <arg name="playground" value = "ring_tiny_long_v1.0" /> -->
+  <!-- <arg name="playground" value = "double_ring" /> -->
+  <!-- <arg name="playground" value = "ring_small_v1.0" /> -->
+  <arg name="playground" value = "test_cases/highway_lc2faster" />
+
+  <node pkg="ai_agent_planner" type="onlane_ai_agent_with_ctx" name="onlane_ai_agent_with_ctx_0" output="screen">
+    <param name="ego_id" type="int" value="0" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_0"/>
+  </node>
+</launch>

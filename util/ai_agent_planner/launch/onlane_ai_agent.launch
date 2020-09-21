@@ -1,0 +1,124 @@
+<launch>
+  <arg name="arena_info_topic" value="/arena_info" />
+  <arg name="arena_info_static_topic" value="/arena_info_static" />
+  <arg name="arena_info_dynamic_topic" value="/arena_info_dynamic" />
+
+  <arg name="global_desired_vel" value = "10.0" />
+  <arg name="global_autonomous_level" value = "2" />
+  <arg name="global_aggressiveness_level" value = "4" />
+
+  <arg name="playground" value = "highway_v1.0" />
+  <!-- <arg name="playground" value = "ring_tiny_v1.0" /> -->
+  <!-- <arg name="playground" value = "ring_small_v1.0" /> -->
+
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_1" output="screen">
+    <param name="ego_id" type="int" value="1" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_1"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_2" output="screen">
+    <param name="ego_id" type="int" value="2" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_2"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_3" output="screen">
+    <param name="ego_id" type="int" value="3" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_3"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_4" output="screen">
+    <param name="ego_id" type="int" value="4" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_4"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_5" output="screen">
+    <param name="ego_id" type="int" value="5" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_5"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_6" output="screen">
+    <param name="ego_id" type="int" value="6" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_6"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_7" output="screen">
+    <param name="ego_id" type="int" value="7" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_7"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_8" output="screen">
+    <param name="ego_id" type="int" value="8" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_8"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_9" output="screen">
+    <param name="ego_id" type="int" value="9" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_9"/>
+  </node>
+  <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_10" output="screen">
+    <param name="ego_id" type="int" value="10" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="desired_vel" value="$(arg global_desired_vel)"/>
+    <param name="autonomous_level" value="$(arg global_autonomous_level)"/>
+    <param name="aggressiveness_level" value="$(arg global_aggressiveness_level)"/>
+    <remap from="~arena_info" to="$(arg arena_info_topic)"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="/ctrl/agent_10"/>
+  </node>
+</launch>

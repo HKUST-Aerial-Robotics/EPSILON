@@ -1,0 +1,53 @@
+syntax = "proto2";
+
+package planning.ssc;
+
+message SscPlannerCfg {
+  required double velocity_singularity_eps = 1;
+  required double low_speed_threshold = 2;
+  required double weight_proximity = 3;
+  required bool is_fitting_only = 4;
+}
+
+message InflateSteps {
+  required int32 x_p = 1;
+  required int32 x_n = 2;
+  required int32 y_p = 3;
+  required int32 y_n = 4;
+  required int32 z_p = 5;
+  required int32 z_n = 6;
+}
+
+message DynamicBounds {
+  required double max_lon_vel = 1;
+  required double min_lon_vel = 2;
+  required double max_lon_acc = 3;
+  required double max_lon_dec = 4;
+  required double max_lat_vel = 5;
+  required double max_lat_acc = 6;
+}
+
+message SscMapCfg {
+  required int32 map_size_x = 1;
+  required int32 map_size_y = 2;
+  required int32 map_size_z = 3;
+
+  required double map_resl_x = 4;
+  required double map_resl_y = 5;
+  required double map_resl_z = 6;
+
+  required double s_back_len = 7;
+  required DynamicBounds dyn_bounds = 8;
+
+  required int32 max_grids_along_time = 9;
+  required InflateSteps infl_steps = 10;
+
+}
+
+message Config {
+  required string name = 1;
+  required string version = 2;
+  required string status = 3;
+  required SscPlannerCfg planner_cfg = 4;
+  required SscMapCfg map_cfg = 5;
+}

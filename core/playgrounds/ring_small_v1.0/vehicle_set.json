@@ -1,0 +1,347 @@
+{
+  "vehicles": {
+    "_COMMENT": "[Vehicles info] - START",
+    "__COMMENT": "Vehicle Subclass: car, van, truck.",
+    "___COMMENT": "Vehicle Type: VehicleWithBicycleKinematics, VehicleDoubleIntegratorKinematics, VehicleSingleIntegratorKinematics",
+    "num": 11,
+    "info": [
+      {
+        "id": 0,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 85.062,
+          "y": -82.635,
+          "angle": -0.053,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 5.0,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 1,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 134.863,
+          "y": -87.849,
+          "angle": -0.121,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 10.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 2,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 94.427,
+          "y": -79.489,
+          "angle": -0.057,
+          "curvature": -0.000711,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 3,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 163.149,
+          "y": -87.945,
+          "angle": -0.127,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 4,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 192.370,
+          "y": -99.090,
+          "angle": -0.133,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 5,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 65.271,
+          "y": -82.589,
+          "angle": 0.034,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 6,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 165.302,
+          "y": -78.056,
+          "angle": 2.985,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 7,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 209.179,
+          "y": -80.246,
+          "angle": 2.972,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 8,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 101.371,
+          "y": -54.917,
+          "angle": 2.759,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 9,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 2.677,
+          "y": -7.104,
+          "angle": 2.554,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 10,
+        "subclass": "car",
+        "type": "VehicleWithBicycleKinematics",
+        "init_state": {
+          "x": 20.701,
+          "y": -85.615,
+          "angle": 0.221,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 1000,
+        "subclass": "car",
+        "type": "brokencar",
+        "init_state": {
+          "x": 467.822,
+          "y": -256.359,
+          "angle": -0.709,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 1001,
+        "subclass": "car",
+        "type": "brokencar",
+        "init_state": {
+          "x": 201.053,
+          "y": -82.896,
+          "angle": 3.006,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      },
+      {
+        "id": 1002,
+        "subclass": "car",
+        "type": "brokencar",
+        "init_state": {
+          "x": 75.764,
+          "y": -85.947,
+          "angle": -0.024,
+          "curvature": 0.0,
+          "velocity": 0.0,
+          "acceleration": 0.0,
+          "steer": 0.0
+        },
+        "params": {
+          "width": 1.90,
+          "length": 4.88,
+          "wheel_base": 2.85,
+          "front_suspension": 0.93,
+          "rear_suspension": 1.10,
+          "max_steering_angle": 45.0,
+          "max_longitudinal_acc": 2.0,
+          "max_lateral_acc": 2.0
+        }
+      }
+    ],
+    "COMMENT_": "[Vehicles info] - END"
+  }
+}

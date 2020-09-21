@@ -1,0 +1,18 @@
+<launch>
+  <arg name="arena_info_static_topic" value="/arena_info_static" />
+  <arg name="arena_info_dynamic_topic" value="/arena_info_dynamic" />
+
+  <include file="$(find phy_simulator)/launch/joy_ctrl.launch"/>
+
+  <arg name="playground" value = "highway_v1.0" />
+  <!-- <arg name="playground" value = "ring_tiny_v1.0" /> -->
+  <!-- <arg name="playground" value = "ring_small_v1.0" /> -->
+
+  <node pkg="phy_simulator" name="phy_simulator_planning_node" type="phy_simulator_planning_node" output="screen">
+    <param name="vehicle_info_path" type="string" value="$(find playgrounds)/$(arg playground)/vehicle_set.json" />
+    <param name="map_path" type="string" value="$(find playgrounds)/$(arg playground)/obstacles_norm.json" />
+    <param name="lane_net_path" type="string" value="$(find playgrounds)/$(arg playground)/lane_net_norm.json" />
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+  </node>
+</launch>

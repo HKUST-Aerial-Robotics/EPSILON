@@ -1,0 +1,183 @@
+syntax = "proto2";
+
+package planning.eudm;
+
+message EfficiencyAssessDetail {
+  required double ego_lack_speed_to_desired_unit_cost = 1;
+  required double ego_over_speed_to_desired_unit_cost = 2;
+  required double ego_desired_speed_tolerate_gap = 3;
+  required double leading_distance_th = 4;
+  required double min_distance_ratio = 5;
+  required double ego_speed_blocked_by_leading_unit_cost = 6;
+  required double leading_speed_blocked_desired_vel_unit_cost = 7;
+}
+
+message SafetyAssessDetail {
+  required bool rss_cost_enable = 1;
+  required double rss_over_speed_power_coeff = 2;
+  required double rss_over_speed_linear_coeff = 3;
+  required double rss_lack_speed_power_coeff = 4;
+  required double rss_lack_speed_linear_coeff = 5;
+  required bool occu_lane_enable = 6;
+  required double occu_lane_unit_cost = 7;
+}
+
+message UserIntentionAssessDetail {
+  required double late_operate_unit_cost = 1;
+  required double cancel_operation_unit_cost = 2;
+}
+
+message NavigationAssessDetail {
+  required double lane_change_left_unit_cost = 1;
+  required double lane_change_right_unit_cost = 2;
+  required double lane_change_unit_cost_vel_lb = 3;
+  required double lane_change_left_recommendation_reward = 4;
+  required double lane_change_right_recommendation_reward = 5;
+}
+
+message CostAssessCfg {
+  required EfficiencyAssessDetail effciency = 1;
+  required SafetyAssessDetail safety = 2;
+  required UserIntentionAssessDetail user = 3;
+  required NavigationAssessDetail navigation = 4;
+  required double discount_factor = 5;
+}
+
+message SimDurationDetail {
+  required double layer = 1;
+  required double last_layer = 2;
+  required double step = 3;
+  required int32 tree_height = 4;
+}
+
+message LonSimLimit {
+  required double acc = 1;
+  required double acc_jerk = 2;
+  required double soft_brake = 3;
+  required double hard_brake = 4;
+  required double brake_jerk = 5;
+}
+
+message LonSimIdm {
+  required double min_spacing = 1;
+  required double head_time = 2;
+  required int32 exponent = 3;
+}
+
+message LonSimDetail {
+  required LonSimIdm idm = 1;
+  required LonSimLimit limit = 2;
+}
+
+message LatSimLimit {
+  required double acc = 1;
+  required double jerk = 2;
+  required double curvature = 3;
+  required double steer_angle = 4;
+  required double steer_rate = 5;
+}
+
+message LatSimPurePursuit {
+  required double gain = 1;
+  required double max_lookahead_dist = 2;
+  required double min_lookahead_dist = 3;
+}
+
+message LatSimDetail {
+  required LatSimPurePursuit pure_pursuit = 1;
+  required LatSimLimit limit = 2;
+}
+
+message EvasiveSimDetail {
+  required bool evasive_enable = 1;
+  required double lon_acc = 2;
+  required double lon_jerk = 3;
+  required double lon_extraspeed = 4;
+  required double head_time = 5;
+  required bool virtual_barrier_enable = 6;
+  required double virtual_barrier_tic = 7;
+}
+
+message ForwardSimDetail {
+  required LonSimDetail lon = 1;
+  required LatSimDetail lat = 2;
+  required EvasiveSimDetail evasive = 3;
+  required bool auto_dec_if_lat_failed = 4;
+  required double cooperative_lat_range = 5;
+  required double lon_aggressive_ratio = 6;
+}
+
+message SimRefLine {
+  required double len_vel_coeff = 1;
+  required double forward_len_max = 2;
+  required double forward_len_min = 3;
+  required double backward_len_max= 4;
+}
+
+message SimCfg {
+  required SimDurationDetail duration = 1;
+  required ForwardSimDetail ego = 2;
+  required ForwardSimDetail agent = 3;
+  required double acc_cmd_vel_gap = 4;
+  required double dec_cmd_vel_gap = 5;
+  required SimRefLine ref_line = 6;
+}
+
+message ActiveLaneChangeCfg {
+  required double cold_duration = 1;
+  required double activate_speed_lower_bound = 2;
+  required double activate_speed_upper_bound = 3;
+  required double activate_max_duration_in_seconds = 4;
+  required double active_min_operation_in_seconds = 5;
+  required double consistent_operate_time_min_gap = 6;
+  required double consistent_min_num_frame = 7;
+  required bool enable_clear_accumulation_by_forbid_signal = 8;
+  required bool enable_auto_cancel_by_forbid_signal = 9;
+  required bool enable_auto_cancel_by_outdate_time = 10;
+  required bool enable_auto_canbel_by_stick_signal = 11;
+  required double auto_cancel_if_late_for_seconds = 12;
+}
+
+message FunctionCfg {
+  required bool mobil_enable = 1;
+  required bool active_lc_enable = 2;
+  required ActiveLaneChangeCfg active_lc = 3;
+  required double stick_lane_change_in_seconds = 4;
+}
+
+message RssCfg {
+  required double response_time = 1;
+  required double longitudinal_acc_max = 2;
+  required double longitudinal_brake_min = 3;
+  required double longitudinal_brake_max = 4;
+  required double lateral_acc_max = 5;
+  required double lateral_brake_min = 6;
+  required double lateral_brake_max = 7;
+  required double lateral_miu = 8;
+}
+
+message StrictCheckCfg {
+  required double inflation_w = 1;
+  required double inflation_h = 2;
+}
+
+message SafetyCfg {
+  required StrictCheckCfg strict = 1;
+  required bool strict_check_enable = 2;
+  required RssCfg rss = 3;
+  required bool rss_check_enable = 4;
+  required RssCfg rss_strict_as_front = 5;
+  required RssCfg rss_strict_as_rear = 6;
+  required bool rss_for_layers_enable = 7;
+}
+
+message Config {
+  required string name = 1;
+  required string version = 2;
+  required string status = 3;
+  required CostAssessCfg cost = 4;
+  required SimCfg sim = 5;
+  required FunctionCfg function = 6;
+  required SafetyCfg safety = 7;
+}
+

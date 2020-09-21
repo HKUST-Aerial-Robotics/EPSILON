@@ -1,0 +1,25 @@
+<launch>
+  <arg name="arena_info_static_topic" value="/arena_info_static" />
+  <arg name="arena_info_dynamic_topic" value="/arena_info_dynamic" />
+
+  <arg name="ctrl_topic" value="/ctrl/agent_0" />
+
+  <arg name="playground" value = "highway_v1.0" />
+  <!-- <arg name="playground" value = "ring_tiny_v1.0" /> -->
+  <!-- <arg name="playground" value = "ring_small_v1.0" /> -->
+
+  <node pkg="planning_integrated"
+        type="test_ssc_with_eudm"
+        name="test_ssc_with_eudm_0"
+        output="screen">
+    <param name="ego_id" type="int" value="0" />
+    <param name="agent_config_path" type="string" value="$(find playgrounds)/$(arg playground)/agent_config.json" />
+    <param name="bp_config_path" type="string" value="$(find eudm_planner)/config/eudm_config.pb.txt" />
+    <param name="ssc_config_path" type="string" value="$(find ssc_planner)/config/ssc_config.pb.txt" />
+    <param name="desired_vel" value="20.0"/>
+    <param name="use_sim_state" value="true"/>
+    <remap from="~arena_info_static" to="$(arg arena_info_static_topic)"/>
+    <remap from="~arena_info_dynamic" to="$(arg arena_info_dynamic_topic)"/>
+    <remap from="~ctrl" to="$(arg ctrl_topic)"/>
+  </node>
+</launch>

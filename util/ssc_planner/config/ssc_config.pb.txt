@@ -1,0 +1,42 @@
+name: "planning.ssc.Config"
+version: ""
+status: "SET"
+
+planner_cfg {
+    velocity_singularity_eps: 0.01
+    low_speed_threshold: 2.0
+    weight_proximity: 1.0
+    is_fitting_only: true
+}
+
+map_cfg {
+  map_size_x: 250
+  map_size_y: 71
+  map_size_z: 41
+
+  map_resl_x: 1.0
+  map_resl_y: 0.2
+  map_resl_z: 0.2
+
+  s_back_len: 20.0
+
+  dyn_bounds {
+    max_lon_vel: 50.0
+    min_lon_vel: 0.0
+    max_lon_acc: 3.0
+    max_lon_dec: -6.0
+    max_lat_vel: 2.5
+    max_lat_acc: 1.25
+  }
+
+  max_grids_along_time: 2
+
+  infl_steps {
+    x_p: 5
+    x_n: 5
+    y_p: 5
+    y_n: 5
+    z_p: 1
+    z_n: 1
+  }
+}

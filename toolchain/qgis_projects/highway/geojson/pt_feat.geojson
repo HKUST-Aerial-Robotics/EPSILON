@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "hw_01_pt_feat",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32610" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 0, "name": "origin", "radius": 2.33 }, "geometry": { "type": "Point", "coordinates": [ 574369.084674001322128, 4180778.587972498964518 ] } }
+]
+}

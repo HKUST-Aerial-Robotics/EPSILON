@@ -1,0 +1,130 @@
+{
+  "agent_config": {
+    "_COMMENT": "[AgentConfig] - START",
+    "num": 11,
+    "info": [
+      {
+        "id": 0,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 1000,
+          "height": 1000,
+          "resolution": 0.2
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": true
+      },
+      {
+        "id": 1,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 2,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 3,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 4,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 5,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 6,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 7,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 8,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 9,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      },
+      {
+        "id": 10,
+        "type": "car",
+        "obstacle_map_meta_info": {
+          "width": 100,
+          "height": 100,
+          "resolution": 0.5
+        },
+        "surrounding_search_radius": 150.0,
+        "enable_openloop_prediction": false
+      }
+    ],
+    "__COMMENT": "[AgentConfig] - END"
+  }
+}

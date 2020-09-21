@@ -1,0 +1,197 @@
+name: "planning.eudm.Config"
+version: ""
+status: "SET"
+
+cost {
+  effciency {
+    ego_lack_speed_to_desired_unit_cost: 0.3
+    ego_over_speed_to_desired_unit_cost: 0.03
+    ego_desired_speed_tolerate_gap: 1.0
+    leading_distance_th: 120.0
+    min_distance_ratio: 0.4
+    ego_speed_blocked_by_leading_unit_cost: 0.02
+    leading_speed_blocked_desired_vel_unit_cost: 0.1
+  }
+  safety {
+    rss_cost_enable: true
+    rss_over_speed_power_coeff: 0.25
+    rss_over_speed_linear_coeff: 0.5
+    rss_lack_speed_power_coeff: 0.35
+    rss_lack_speed_linear_coeff: 0.6
+    occu_lane_enable: true
+    occu_lane_unit_cost: 0.10
+  }
+  user {
+    late_operate_unit_cost: 0.25
+    cancel_operation_unit_cost: 8.0
+  }
+  navigation {
+    lane_change_left_unit_cost: 0.015
+    lane_change_right_unit_cost: 0.06
+    lane_change_unit_cost_vel_lb: 10.0
+    lane_change_left_recommendation_reward : 1.0
+    lane_change_right_recommendation_reward: 1.0
+  }
+  discount_factor: 0.7
+}
+
+sim {
+  duration {
+    layer: 1.0
+    last_layer: 1.0
+    step: 0.2
+    tree_height: 5
+  }
+  ego {
+    lon {
+      idm {
+        min_spacing: 2.0
+        head_time: 1.0
+        exponent: 4
+      }
+      limit {
+        acc: 1.0
+        acc_jerk: 3.0
+        soft_brake: 1.67
+        hard_brake: 5.0
+        brake_jerk: 5.0
+      }
+    }
+    lat {
+      pure_pursuit {
+        gain: 2.5
+        max_lookahead_dist: 100.0
+        min_lookahead_dist: 3.0
+      }
+      limit {
+        acc: 1.2
+        jerk: 1.8
+        curvature: 0.33
+        steer_angle: 0.785
+        steer_rate: 0.39
+      }
+    }
+    evasive {
+      evasive_enable : true
+      lon_acc: 2.0
+      lon_jerk: 3.0
+      lon_extraspeed: 10.0
+      head_time: 0.6
+      virtual_barrier_enable : true
+      virtual_barrier_tic: 0.2
+    }
+    auto_dec_if_lat_failed: true
+    cooperative_lat_range: 2.2
+    lon_aggressive_ratio: 0.25
+  }
+  agent {
+    lon {
+      idm {
+        min_spacing: 1.0
+        head_time: 0.5
+        exponent: 4
+      }
+      limit {
+        acc: 2.0
+        acc_jerk: 5.0
+        soft_brake: 1.67
+        hard_brake: 4.0
+        brake_jerk: 4.0
+      }
+    }
+    lat {
+      pure_pursuit {
+        gain: 1.5
+        max_lookahead_dist: 50.0
+        min_lookahead_dist: 3.0
+      }
+      limit {
+        acc: 1.5
+        jerk: 3.0
+        curvature: 0.33
+        steer_angle: 0.785
+        steer_rate: 0.39
+      }
+    }
+    evasive {
+      evasive_enable : false
+      lon_acc: 2.0
+      lon_jerk: 1.5
+      lon_extraspeed: 5.0
+      head_time: 0.6
+      virtual_barrier_enable : false
+      virtual_barrier_tic: 0.4
+    }
+    auto_dec_if_lat_failed: true
+    cooperative_lat_range: 1.25
+    lon_aggressive_ratio: 0.25
+  }
+  acc_cmd_vel_gap: 10.0
+  dec_cmd_vel_gap: 10.0
+  ref_line {
+    len_vel_coeff: 10.0
+    forward_len_max: 150.0
+    forward_len_min: 50.0
+    backward_len_max: 20.0
+  }
+}
+
+function {
+  mobil_enable: false
+  active_lc_enable: true
+  active_lc {
+    cold_duration: 5.0
+    activate_speed_lower_bound: 4.0
+    activate_speed_upper_bound: 24.0
+    activate_max_duration_in_seconds: 3.8
+    active_min_operation_in_seconds: 2.0
+    consistent_operate_time_min_gap: 0.5
+    consistent_min_num_frame: 4
+    enable_clear_accumulation_by_forbid_signal: true
+    enable_auto_cancel_by_forbid_signal: false
+    enable_auto_cancel_by_outdate_time: true
+    enable_auto_canbel_by_stick_signal: true
+    auto_cancel_if_late_for_seconds: 15.0
+  }
+  stick_lane_change_in_seconds: 0.0
+}
+
+safety {
+  strict_check_enable: true
+  strict {
+    inflation_w: 0.1
+    inflation_h: 0.1
+  }
+  rss_check_enable: true
+  rss {
+    response_time: 0.2
+    longitudinal_acc_max: 2.0
+    longitudinal_brake_min: 4.0
+    longitudinal_brake_max: 5.0
+    lateral_acc_max: 1.0
+    lateral_brake_min: 1.0
+    lateral_brake_max: 1.0
+    lateral_miu: 0.5
+  }
+  rss_strict_as_front {
+    response_time: 0.1
+    longitudinal_acc_max: 0.5
+    longitudinal_brake_min: 5.0
+    longitudinal_brake_max: 4.0
+    lateral_acc_max: 1.0
+    lateral_brake_min: 1.0
+    lateral_brake_max: 1.0
+    lateral_miu: 0.5
+  }
+  rss_strict_as_rear {
+    response_time: 0.1
+    longitudinal_acc_max: 0.5
+    longitudinal_brake_min: 5.0
+    longitudinal_brake_max: 5.0
+    lateral_acc_max: 1.0
+    lateral_brake_min: 1.0
+    lateral_brake_max: 1.0
+    lateral_miu: 0.5
+  }
+  rss_for_layers_enable: false
+}

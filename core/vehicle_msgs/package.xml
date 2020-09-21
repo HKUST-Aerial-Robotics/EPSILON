@@ -1,0 +1,22 @@
+<package>
+  <name>vehicle_msgs</name>
+  <version>0.0.0</version>
+  <description>vehicle_msgs</description>
+  <maintainer email="uav.ust.hk@todo.com">HKUST_UAV_GROUP</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>common</build_depend>
+  <build_depend>message_generation</build_depend>
+  
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>common</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <export>
+    <cpp cflags="-I${prefix}/include"
+         lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib"/>
+  </export>
+
+</package>
