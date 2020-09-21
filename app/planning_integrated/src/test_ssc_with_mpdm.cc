@@ -1,22 +1,24 @@
 /**
- * @file test_ssc_planner_with_smm.cc
- * @author HKUST Aerial Robotics Group
- * @brief test ssc planner with mpdm behavior planner
+ * @file test_ssc_with_mpdm.cc
+ * @author HKUST Aerial Robotics Group (lzhangbz@ust.hk)
+ * @brief
  * @version 0.1
- * @date 2019-02
- * @copyright Copyright (c) 2019
+ * @date 2020-09-21
+ *
+ * @copyright Copyright (c) 2020
+ *
  */
+#include <ros/ros.h>
 #include <stdlib.h>
+
 #include <chrono>
 #include <iostream>
 
-#include <ros/ros.h>
+#include "behavior_planner/behavior_server_ros.h"
 #include "semantic_map_manager/data_renderer.h"
 #include "semantic_map_manager/ros_adapter.h"
 #include "semantic_map_manager/semantic_map_manager.h"
 #include "semantic_map_manager/visualizer.h"
-
-#include "behavior_planner/behavior_server_ros.h"
 #include "ssc_planner/ssc_server_ros.h"
 
 DECLARE_BACKWARD;

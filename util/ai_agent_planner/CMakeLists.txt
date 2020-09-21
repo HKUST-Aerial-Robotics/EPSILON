@@ -39,19 +39,7 @@ include_directories(
 add_executable(onlane_ai_agent
     src/onlane_ai_agent.cc
 )
-
 target_link_libraries(onlane_ai_agent
-    ${catkin_LIBRARIES}
-    hkust_smm_ros
-    behavior_planner_ros
-    hkust_pl_vehicle_model
-)
-
-add_executable(onlane_ai_agent_with_ctx
-    src/onlane_ai_agent_with_ctx.cc
-)
-
-target_link_libraries(onlane_ai_agent_with_ctx
     ${catkin_LIBRARIES}
     hkust_smm_ros
     behavior_planner_ros
