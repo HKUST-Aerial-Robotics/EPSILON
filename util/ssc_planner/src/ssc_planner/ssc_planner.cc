@@ -108,7 +108,7 @@ ErrorType SscPlanner::RunOnce() {
       initial_state_.velocity > cfg_.planner_cfg().low_speed_threshold()
           ? true
           : false;
-  if (map_itf_->GetLocalNavigationLane(&nav_lane_local_) != kSuccess) {
+  if (map_itf_->GetLocalReferenceLane(&nav_lane_local_) != kSuccess) {
     LOG(ERROR) << "[Ssc]fail to find ego lane.";
     return kWrongStatus;
   }
@@ -153,7 +153,8 @@ ErrorType SscPlanner::RunOnce() {
   auto t_stf = timer_stf.toc();
   LOG(WARNING) << "[Ssc]state transform time cost: " << t_stf << " ms";
 
-  static TicToc timer_sscmap;  // ! SscMap part can be very slow
+  static TicToc timer_sscmap;  // ! SscMap part sometimes can be very slow
+                               // ! (Maybe CPU scheduling?)
   timer_sscmap.tic();
   time_origin_ = initial_state_.time_stamp;
   p_ssc_map_->ResetSscMap(initial_frenet_state_);
@@ -167,7 +168,8 @@ ErrorType SscPlanner::RunOnce() {
         return kWrongStatus;
       }
     }
-    // ! Notice: No inflation here to save time in eudm project
+    // ! Notice: No inflation here to save time in eudm project. Improve
+    // ! efficiency in the future.
     // TicToc timer_infl;
     // p_ssc_map_->InflateObstacleGrid(ego_vehicle_.param());
     // printf("[SscPlanner] InflateObstacleGrid time cost: %lf ms\n",
@@ -283,14 +285,6 @@ ErrorType SscPlanner::RunQpOptimization() {
     BezierSpline bezier_spline;
 
     cube_list[i].back().t_ub = fs_vehicle_traj.back().frenet_state.time_stamp;
-    // printf("[XXX] cube last t: %lf, traj last t: %lf, dt: %lf\n",
-    //        cube_list[i].back().t_ub,
-    //        fs_vehicle_traj.back().frenet_state.time_stamp,
-    //        cube_list[i].back().t_ub -
-    //            fs_vehicle_traj.back().frenet_state.time_stamp);
-
-    // printf("[XXX] cube first t: %lf, traj first t: %lf\n",
-    //        cube_list[i].front().t_lb, time_origin_);
 
     if (CorridorFeasibilityCheck(cube_list[i]) != kSuccess) {
       LOG(ERROR) << "[Ssc]fail: corridor not valid for optimization.";
@@ -691,102 +685,6 @@ ErrorType SscPlanner::ValidateTrajectory(const FrenetTrajectory& traj) {
     }
   }
   return kSuccess;
-}
-
-void SscPlanner::GetSscOutput(planning::ssc::SscOutput* ssc_output) const {
-  // * sampled x-y trajectory
-  auto traj = trajectory();
-  if (traj == nullptr || !traj->IsValid()) {
-    ssc_output->valid = false;
-    return;
-  }
-  std::vector<decimal_t> t_vec_xy;
-  common::GetRangeVector<decimal_t>(traj->begin(), traj->end(), 0.1, true,
-                                    &t_vec_xy);
-  for (const auto t : t_vec_xy) {
-    common::State state;
-    if (traj->GetState(t, &state) != kSuccess) {
-      printf("[SscPlanner] Evaluate trajectory error\n");
-      // assert(false);
-    }
-
-    planning::ssc::PlainState plain_state;
-    plain_state.timestamp = state.time_stamp;
-    plain_state.x = state.vec_position.x();
-    plain_state.y = state.vec_position.y();
-    plain_state.angle = state.angle;
-    plain_state.vel = state.velocity;
-    plain_state.acc = state.acceleration;
-    plain_state.curvature = state.curvature;
-
-    ssc_output->sampled_traj.push_back(plain_state);
-  }
-
-  // * QP part
-  // ~ ref frenet states
-  for (const auto& fs : final_ref_states_) {
-    planning::ssc::PlainFrenetState plain_fs;
-    plain_fs.time_stamp = fs.time_stamp;
-    plain_fs.vec_s[0] = fs.vec_s[0];
-    plain_fs.vec_s[1] = fs.vec_s[1];
-    plain_fs.vec_s[2] = fs.vec_s[2];
-    plain_fs.vec_dt[0] = fs.vec_dt[0];
-    plain_fs.vec_dt[1] = fs.vec_dt[1];
-    plain_fs.vec_dt[2] = fs.vec_dt[2];
-    plain_fs.vec_ds[0] = fs.vec_ds[0];
-    plain_fs.vec_ds[1] = fs.vec_ds[1];
-    plain_fs.vec_ds[2] = fs.vec_ds[2];
-
-    ssc_output->ref_ff_states.push_back(plain_fs);
-  }
-
-  // ~ QP traj
-  Vecf<2> pos, vel, acc;
-  FrenetState fs;
-  std::vector<decimal_t> t_vec_qp;
-  common::GetRangeVector<decimal_t>(traj->begin(), traj->end(), 0.1, true,
-                                    &t_vec_qp);
-  for (const auto t : t_vec_qp) {
-    if (traj->GetFrenetState(t, &fs) != kSuccess) {
-      printf("[SscPlanner] Evaluate fs trajectory error\n");
-    }
-
-    planning::ssc::PlainFrenetState plain_fs;
-    plain_fs.time_stamp = fs.time_stamp;
-    plain_fs.vec_s[0] = fs.vec_s[0];
-    plain_fs.vec_s[1] = fs.vec_s[1];
-    plain_fs.vec_s[2] = fs.vec_s[2];
-    plain_fs.vec_dt[0] = fs.vec_dt[0];
-    plain_fs.vec_dt[1] = fs.vec_dt[1];
-    plain_fs.vec_dt[2] = fs.vec_dt[2];
-    plain_fs.vec_ds[0] = fs.vec_ds[0];
-    plain_fs.vec_ds[1] = fs.vec_ds[1];
-    plain_fs.vec_ds[2] = fs.vec_ds[2];
-
-    ssc_output->qp_traj.push_back(plain_fs);
-  }
-
-  // ~ Corridor
-  for (const auto& cube : final_corridor_) {
-    planning::ssc::PlainDrivingCube plain_cube;
-    plain_cube.t_lb = cube.t_lb;
-    plain_cube.t_ub = cube.t_ub;
-
-    plain_cube.p_lb = cube.p_lb;
-    plain_cube.p_ub = cube.p_ub;
-
-    plain_cube.v_lb = cube.v_lb;
-    plain_cube.v_ub = cube.v_ub;
-
-    plain_cube.a_lb = cube.a_lb;
-    plain_cube.a_ub = cube.a_ub;
-
-    ssc_output->corridor.push_back(plain_cube);
-  }
-
-  ssc_output->plan_stamp = stamp_;
-  ssc_output->time_cost = this->time_cost();
-  ssc_output->valid = true;
 }
 
 }  // namespace planning

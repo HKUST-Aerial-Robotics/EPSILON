@@ -32,7 +32,7 @@ ErrorType SscPlannerAdapter::GetEgoState(State* state) {
   return kSuccess;
 }
 
-ErrorType SscPlannerAdapter::GetLocalNavigationLane(Lane* lane) {
+ErrorType SscPlannerAdapter::GetLocalReferenceLane(Lane* lane) {
   if (!is_valid_) return kWrongStatus;
   auto ref_lane = map_->ego_behavior().ref_lane;
   if (!ref_lane.IsValid()) {

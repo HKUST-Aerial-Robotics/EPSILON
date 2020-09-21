@@ -46,8 +46,6 @@ SscVisualizer::SscVisualizer(ros::NodeHandle nh, int node_id)
       sur_vehicle_trajs_vis_topic, 1);
   corridor_pub_ =
       nh_.advertise<visualization_msgs::MarkerArray>(corridor_vis_topic, 1);
-  plain_ssc_output_pub_ = nh_.advertise<hkust_msg_transformer::PlainSscOutput>(
-      plain_ssc_output_topic, 1);
 }
 
 void SscVisualizer::VisualizeDataWithStamp(const ros::Time &stamp,
@@ -62,15 +60,7 @@ void SscVisualizer::VisualizeDataWithStamp(const ros::Time &stamp,
       stamp, planner.surround_forward_trajs_fs(), planner.p_ssc_map());
   VisualizeCorridorsInSscSpace(
       stamp, planner.p_ssc_map()->driving_corridor_vec(), planner.p_ssc_map());
-  // VisualizeCorridorsInSscSpace2(stamp,
-  //                               planner.p_ssc_map()->final_corridor_vec());
   VisualizeQpTrajs(stamp, planner.qp_trajs());
-
-  planning::ssc::SscOutput ssc_output;
-  planner.GetSscOutput(&ssc_output);
-  hkust_msg_transformer::PlainSscOutput ssc_msg;
-  planning::ssc::SscUtils::ConvertSscOutputToMsg(ssc_output, &ssc_msg);
-  plain_ssc_output_pub_.publish(ssc_msg);
 }
 
 void SscVisualizer::VisualizeQpTrajs(
@@ -119,13 +109,6 @@ void SscVisualizer::VisualizeSscMap(const ros::Time &stamp,
   auto origin = p_ssc_map->p_3d_grid()->origin();
   decimal_t s_len =
       p_ssc_map->config().map_resolution[0] * p_ssc_map->config().map_size[0];
-  // decimal_t d_len =
-  //     p_ssc_map->config().map_resolution[1] *
-  //     p_ssc_map->config().map_size[1];
-  // decimal_t t_len =
-  //     p_ssc_map->config().map_resolution[2] *
-  //     p_ssc_map->config().map_size[2];
-
   decimal_t x = s_len / 2 - p_ssc_map->config().s_back_len + origin[0];
   decimal_t y = 0;
   // decimal_t z = t_len / 2;
@@ -334,39 +317,6 @@ void SscVisualizer::VisualizeCorridorsInSscSpace(
     }
   }
 
-  int num_markers = static_cast<int>(corridor_vec_marker.markers.size());
-  common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      ros::Time::now(), std::string("ssc_map"), last_corridor_mk_cnt,
-      &corridor_vec_marker);
-  corridor_pub_.publish(corridor_vec_marker);
-  last_corridor_mk_cnt = num_markers;
-}
-
-void SscVisualizer::VisualizeCorridorsInSscSpace2(
-    const ros::Time &stamp,
-    const vec_E<vec_E<common::SpatioTemporalSemanticCubeNd<2>>> &corridor_vec) {
-  if (corridor_vec.empty()) return;
-  visualization_msgs::MarkerArray corridor_vec_marker;
-  int id_cnt = 0;
-  for (const auto &corridor : corridor_vec) {
-    for (const auto &cube : corridor) {
-      decimal_t dx = cube.p_ub[0] - cube.p_lb[0];
-      decimal_t dy = cube.p_ub[1] - cube.p_lb[1];
-      decimal_t dz = cube.t_ub - cube.t_lb;
-      decimal_t x = cube.p_lb[0] + dx / 2.0;
-      decimal_t y = cube.p_lb[1] + dy / 2.0;
-      decimal_t z = cube.t_lb - start_time_ + dz / 2.0;
-
-      std::array<decimal_t, 3> aabb_coord = {x, y, z};
-      std::array<decimal_t, 3> aabb_len = {dx, dy, dz};
-      common::AxisAlignedBoundingBoxND<3> map_aabb(aabb_coord, aabb_len);
-      visualization_msgs::Marker map_aabb_marker;
-      map_aabb_marker.id = id_cnt++;
-      common::VisualizationUtil::GetRosMarkerCubeUsingAxisAlignedBoundingBox3D(
-          map_aabb, common::ColorARGB(0.15, 0.3, 1.0, 0.3), &map_aabb_marker);
-      corridor_vec_marker.markers.push_back(map_aabb_marker);
-    }
-  }
   int num_markers = static_cast<int>(corridor_vec_marker.markers.size());
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
       ros::Time::now(), std::string("ssc_map"), last_corridor_mk_cnt,

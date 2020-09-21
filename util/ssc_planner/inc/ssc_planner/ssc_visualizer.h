@@ -23,9 +23,7 @@
 #include "common/state/frenet_state.h"
 #include "common/state/state.h"
 #include "common/visualization/common_visualization_util.h"
-#include "ssc_planner/ssc_itf.h"
 #include "ssc_planner/ssc_planner.h"
-#include "ssc_planner/ssc_utils.h"
 
 namespace planning {
 
@@ -54,11 +52,6 @@ class SscVisualizer {
       const ros::Time &stamp, const vec_E<common::DrivingCorridor> corridor_vec,
       const SscMap *p_ssc_map);
 
-  void VisualizeCorridorsInSscSpace2(
-      const ros::Time &stamp,
-      const vec_E<vec_E<common::SpatioTemporalSemanticCubeNd<2>>>
-          &corridor_vec);
-
   int last_traj_list_marker_cnt_ = 0;
   int last_surrounding_vehicle_marker_cnt_ = 0;
 
@@ -73,15 +66,12 @@ class SscVisualizer {
   ros::Publisher sur_vehicle_trajs_pub_;
   ros::Publisher corridor_pub_;
   ros::Publisher qp_pub_;
-  ros::Publisher plain_ssc_output_pub_;
 
   int last_corridor_mk_cnt = 0;
   int last_qp_traj_mk_cnt = 0;
   int last_sur_vehicle_traj_mk_cnt = 0;
   int last_forward_traj_mk_cnt = 0;
-  decimal_t marker_lifetime_{0.05};
 };  // SscVisualizer
-
 }  // namespace planning
 
 #endif  // _UTIL_SSC_PLANNER_INC_VISUALIZER_H_

@@ -143,7 +143,6 @@ void SscPlannerServer::Init(const std::string& config_path) {
   std::string traj_topic = std::string("/vis/agent_") +
                            std::to_string(ego_id_) +
                            std::string("/ssc/exec_traj");
-  joy_sub_ = nh_.subscribe("/joy", 10, &SscPlannerServer::JoyCallback, this);
   nh_.param("use_sim_state", use_sim_state_, true);
 
   ctrl_signal_pub_ = nh_.advertise<vehicle_msgs::ControlSignal>("ctrl", 20);
@@ -152,8 +151,6 @@ void SscPlannerServer::Init(const std::string& config_path) {
   executing_traj_vis_pub_ =
       nh_.advertise<visualization_msgs::MarkerArray>(traj_topic, 1);
 }
-
-void SscPlannerServer::JoyCallback(const sensor_msgs::Joy::ConstPtr& msg) {}
 
 void SscPlannerServer::Start() {
   if (is_replan_on_) {

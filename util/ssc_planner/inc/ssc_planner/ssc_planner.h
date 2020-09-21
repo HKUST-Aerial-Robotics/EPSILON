@@ -26,7 +26,6 @@
 #include "common/trajectory/frenet_primitive_traj.h"
 #include "ssc_config.pb.h"
 #include "ssc_planner/map_interface.h"
-#include "ssc_planner/ssc_itf.h"
 #include "ssc_planner/ssc_map.h"
 
 namespace planning {
@@ -125,8 +124,6 @@ class SscPlanner : public Planner {
    * @brief Run one planning round with given states
    */
   ErrorType RunOnce() override;
-
-  void GetSscOutput(planning::ssc::SscOutput* ssc_output) const;
 
  private:
   ErrorType ReadConfig(const std::string config_path);

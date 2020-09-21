@@ -6,7 +6,7 @@ planner_cfg {
     velocity_singularity_eps: 0.01
     low_speed_threshold: 2.0
     weight_proximity: 1.0
-    is_fitting_only: true
+    is_fitting_only: false
 }
 
 map_cfg {

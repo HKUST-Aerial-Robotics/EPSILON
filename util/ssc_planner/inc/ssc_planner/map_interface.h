@@ -33,7 +33,7 @@ class SscPlannerMapItf {
   virtual ErrorType GetEgoVehicle(Vehicle* vehicle) = 0;
   virtual ErrorType GetEgoState(State* state) = 0;
   virtual ErrorType GetEgoReferenceLane(Lane* lane) = 0;
-  virtual ErrorType GetLocalNavigationLane(Lane* lane) = 0;
+  virtual ErrorType GetLocalReferenceLane(Lane* lane) = 0;
   virtual ErrorType GetLaneByLaneId(const int lane_id, Lane* lane) = 0;
   virtual ErrorType GetObstacleMap(GridMap2D* grid_map) = 0;
   virtual ErrorType CheckIfCollision(const common::VehicleParam& vehicle_param,

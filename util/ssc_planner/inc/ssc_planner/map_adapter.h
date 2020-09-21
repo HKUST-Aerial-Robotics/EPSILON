@@ -23,7 +23,7 @@ class SscPlannerAdapter : public SscPlannerMapItf {
   ErrorType GetEgoVehicle(Vehicle* vehicle) override;
   ErrorType GetEgoState(State* state) override;
   ErrorType GetEgoReferenceLane(Lane* lane) override;
-  ErrorType GetLocalNavigationLane(Lane* lane) override;
+  ErrorType GetLocalReferenceLane(Lane* lane) override;
   ErrorType GetLaneByLaneId(const int lane_id, Lane* lane) override;
   ErrorType GetObstacleMap(GridMap2D* grid_map) override;
   ErrorType CheckIfCollision(const common::VehicleParam& vehicle_param,

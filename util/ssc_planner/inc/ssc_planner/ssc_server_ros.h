@@ -8,7 +8,6 @@
  */
 #ifndef _UTIL_SSC_PLANNER_INC_SSC_SERVER_ROS_H_
 #define _UTIL_SSC_PLANNER_INC_SSC_SERVER_ROS_H_
-#include <sensor_msgs/Joy.h>
 
 #include <chrono>
 #include <numeric>
@@ -57,8 +56,6 @@ class SscPlannerServer {
  private:
   void PlanCycleCallback();
 
-  void JoyCallback(const sensor_msgs::Joy::ConstPtr &msg);
-
   void Replan();
 
   void PublishData();
@@ -82,8 +79,6 @@ class SscPlannerServer {
   TicToc time_profile_tool_;
   decimal_t global_init_stamp_{0.0};
 
-  common::VehicleControlSignal joy_ctrl_signal;
-
   // ros related
   ros::NodeHandle nh_;
   decimal_t work_rate_ = 20.0;
@@ -93,7 +88,6 @@ class SscPlannerServer {
   ros::Publisher ctrl_signal_pub_;
   ros::Publisher map_marker_pub_;
   ros::Publisher executing_traj_vis_pub_;
-  ros::Subscriber joy_sub_;
 
   // input buffer
   moodycamel::ReaderWriterQueue<SemanticMapManager> *p_input_smm_buff_;
