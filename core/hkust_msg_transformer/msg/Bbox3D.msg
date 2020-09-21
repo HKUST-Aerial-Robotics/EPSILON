@@ -1,2 +1,0 @@
-geometry_msgs/Point left_front_bottom
-geometry_msgs/Point right_back_top

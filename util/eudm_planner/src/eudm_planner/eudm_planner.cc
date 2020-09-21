@@ -261,21 +261,6 @@ ErrorType EudmPlanner::RunEudm() {
   GetSurroundingForwardSimAgents(surrounding_semantic_vehicles,
                                  &surrounding_fsagents);
 
-  // !(@lu.zhang) test social force
-  common::VehicleSet key_vehicles;
-  if (map_itf_->GetKeyVehicles(&key_vehicles) != kSuccess) {
-    LOG(ERROR) << "[Eudm][Fatal]fail to get key vehicles. Exit";
-    return kWrongStatus;
-  }
-  planning::SocialForceModel::SocialForceInfo force_info;
-  planning::SocialForceModel::GetSocialForceInfo(ego_vehicle_, key_vehicles,
-                                                 &force_info);
-  current_social_force_ = force_info;
-  decimal_t lat_offset = tanh(force_info.decomp_force(1));
-  // printf("[XXX]lat offset: %lf\n", lat_offset);
-
-  // !(@lu.zhang) gap analysis
-
   auto action_script = dcp_tree_ptr_->action_script();
   int n_sequence = action_script.size();
 
@@ -1368,11 +1353,6 @@ ErrorType EudmPlanner::EgoAgentForwardSim(
     const ForwardSimEgoAgent& ego_fsagent,
     const common::VehicleSet& all_sim_vehicles, const decimal_t& sim_time_step,
     common::State* state_out) const {
-  // * Social force calculation, with masks
-  planning::SocialForceModel::SocialForceInfo force_info;
-  planning::SocialForceModel::GetSocialForceInfo(ego_fsagent.vehicle,
-                                                 all_sim_vehicles, &force_info);
-
   common::State state_output;
 
   if (ego_fsagent.lat_behavior == LateralBehavior::kLaneKeeping) {
@@ -1395,17 +1375,6 @@ ErrorType EudmPlanner::EgoAgentForwardSim(
 
     // TODO(lu.zhang): consider lateral social force to get lateral offset
     decimal_t lat_track_offset = 0.0;
-    // decimal_t lat_track_offset = 1.0 * tanh(force_info.decomp_force(1)
-    // / 10.0);
-
-    // if (ego_fsagent.lat_behavior_longterm ==
-    // LateralBehavior::kLaneChangeLeft) {
-    //   lat_track_offset += 1.0;
-    // } else if (ego_fsagent.lat_behavior_longterm ==
-    //            LateralBehavior::kLaneChangeRight) {
-    //   lat_track_offset -= 1.0;
-    // }
-
     if (planning::OnLaneForwardSimulation::PropagateOnceAdvancedLK(
             ego_fsagent.target_stf, ego_fsagent.vehicle, leading_vehicle,
             lat_track_offset, sim_time_step, ego_fsagent.sim_param,
@@ -1594,10 +1563,6 @@ void EudmPlanner::set_lane_change_info(const LaneChangeInfo& lc_info) {
 }
 
 decimal_t EudmPlanner::desired_velocity() const { return desired_velocity_; }
-
-vec_E<vec_E<common::Vehicle>> EudmPlanner::forward_trajs() const {
-  return forward_trajs_;
-}
 
 int EudmPlanner::winner_id() const { return winner_id_; }
 

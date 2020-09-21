@@ -1,5 +1,0 @@
-uint32 valid_sample_index_ub
-float64 efficiency
-float64 safety
-float64 navigation
-float64 weight

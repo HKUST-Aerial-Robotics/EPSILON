@@ -1,25 +1,24 @@
 #ifndef _CORE_EUDM_PLANNER_INC_EUDM_SERVER_ROS_H__
 #define _CORE_EUDM_PLANNER_INC_EUDM_SERVER_ROS_H__
-#include "ros/ros.h"
+#include <sensor_msgs/Joy.h>
 
 #include <chrono>
 #include <functional>
 #include <numeric>
 #include <thread>
 
+#include "common/basics/tic_toc.h"
+#include "common/visualization/common_visualization_util.h"
+#include "eudm_planner/dcp_tree.h"
+#include "eudm_planner/eudm_itf.h"
 #include "eudm_planner/eudm_manager.h"
 #include "eudm_planner/eudm_planner.h"
 #include "eudm_planner/map_adapter.h"
 #include "eudm_planner/visualizer.h"
-#include "semantic_map_manager/semantic_map_manager.h"
-
-#include "common/basics/tic_toc.h"
-#include "common/visualization/common_visualization_util.h"
 #include "moodycamel/atomicops.h"
 #include "moodycamel/readerwriterqueue.h"
-
-#include <sensor_msgs/Joy.h>
-#include "eudm_planner/dcp_tree.h"
+#include "ros/ros.h"
+#include "semantic_map_manager/semantic_map_manager.h"
 #include "tf/tf.h"
 #include "tf/transform_datatypes.h"
 #include "vehicle_msgs/encoder.h"

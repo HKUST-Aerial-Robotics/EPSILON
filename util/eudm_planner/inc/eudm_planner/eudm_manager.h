@@ -87,8 +87,6 @@ class EudmManager {
 
   void ConstructBehavior(common::SemanticBehavior* behavior);
 
-  void ConstructPlainOutput(planning::eudm::PlainOutput* out);
-
   EudmPlanner& planner();
 
   int original_winner_id() const { return last_snapshot_.original_winner_id; }

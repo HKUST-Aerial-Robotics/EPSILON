@@ -33,7 +33,6 @@ SscVisualizer::SscVisualizer(ros::NodeHandle nh, int node_id)
   std::string qp_vis_topic = std::string("/vis/agent_") +
                              std::to_string(node_id_) +
                              std::string("/ssc/qp_vis");
-  std::string plain_ssc_output_topic = std::string("/hkust/plain_ssc_output");
 
   ssc_map_pub_ =
       nh_.advertise<visualization_msgs::MarkerArray>(ssc_map_vis_topic, 1);

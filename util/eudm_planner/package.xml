@@ -45,14 +45,12 @@
   <build_depend>common</build_depend>
   <build_depend>semantic_map_manager</build_depend>
   <build_depend>route_planner</build_depend>
-  <build_depend>hkust_msg_transformer</build_depend>
 
   <run_depend>roscpp</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>common</run_depend>
   <run_depend>semantic_map_manager</run_depend>
   <run_depend>route_planner</run_depend>
-  <run_depend>hkust_msg_transformer</run_depend>
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

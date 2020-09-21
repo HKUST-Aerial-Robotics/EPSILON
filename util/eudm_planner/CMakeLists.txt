@@ -16,7 +16,6 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 find_package(common REQUIRED)
 find_package(vehicle_model REQUIRED)
-find_package(hkust_msg_transformer REQUIRED)
 find_package(semantic_map_manager REQUIRED)
 find_package(forward_simulator REQUIRED)
 find_package(route_planner REQUIRED)
@@ -29,7 +28,7 @@ PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS
 #if this catkin packge's header is used by other packages, use catkin_package to
 #declare the include directories of this package.
 catkin_package(
-    INCLUDE_DIRS inc ${hkust_msg_transformer_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR}
+    INCLUDE_DIRS inc ${CMAKE_CURRENT_BINARY_DIR}
     LIBRARIES hkust_pl_eudm hkust_eudm_ros
 )
 
@@ -41,7 +40,6 @@ include_directories(
     ${semantic_map_manager_INCLUDE_DIRS}
     ${vehicle_model_INCLUDE_DIRS}
     ${forward_simulator_INCLUDE_DIRS}
-    ${hkust_msg_transformer_INCLUDE_DIRS}
     ${CMAKE_CURRENT_BINARY_DIR}
 )
 

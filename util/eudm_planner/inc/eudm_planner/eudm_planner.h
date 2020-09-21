@@ -18,7 +18,6 @@
 #include "eudm_planner/eudm_itf.h"
 #include "eudm_planner/map_interface.h"
 #include "forward_simulator/onlane_forward_simulation.h"
-#include "forward_simulator/social_force_model.h"
 
 namespace planning {
 
@@ -168,7 +167,7 @@ class EudmPlanner : public Planner {
 
   decimal_t desired_velocity() const;
 
-  vec_E<vec_E<common::Vehicle>> forward_trajs() const;
+  vec_E<vec_E<common::Vehicle>> forward_trajs() const { return forward_trajs_; }
 
   int winner_id() const;
 
@@ -216,10 +215,6 @@ class EudmPlanner : public Planner {
   common::State plan_state() { return ego_vehicle_.state(); }
   std::vector<std::vector<DcpAction>> action_script() {
     return dcp_tree_ptr_->action_script();
-  }
-
-  planning::SocialForceModel::SocialForceInfo current_social_force() const {
-    return current_social_force_;
   }
 
   const Cfg& cfg() const { return cfg_; }
@@ -363,8 +358,6 @@ class EudmPlanner : public Planner {
   common::RssChecker::RssConfig rss_config_;
   common::RssChecker::RssConfig rss_config_strict_as_front_;
   common::RssChecker::RssConfig rss_config_strict_as_rear_;
-
-  planning::SocialForceModel::SocialForceInfo current_social_force_;
 
   OnLaneForwardSimulation::Param ego_sim_param_;
   OnLaneForwardSimulation::Param agent_sim_param_;
