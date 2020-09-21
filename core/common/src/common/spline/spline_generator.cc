@@ -261,30 +261,6 @@ ErrorType SplineGenerator<N_DEG, N_DIM>::GetQuinticSplineBySampleFitting(
 }
 
 template <int N_DEG, int N_DIM>
-ErrorType SplineGenerator<N_DEG, N_DIM>::GetOptimalSplineBySampleInterpolation(
-    const vec_Vecf<N_DIM>& samples, const std::vector<decimal_t>& para,
-    const int minimize_derivative, SplineType* spline) {
-  if (N_DEG < 5) {
-    printf(
-        "[OptimalSplineBySampleInterpolation]Currently we just support "
-        "reconstructing >= quintic spline (5).\n");
-    return kWrongStatus;
-  }
-  static const SplineUnQP<N_DEG, N_DIM> solver;
-  vec_E<Waypoint<N_DIM>> waypoints;
-  if (GetWaypointsFromPositionSamples(samples, para, &waypoints) != kSuccess) {
-    return kWrongStatus;
-  }
-
-  if (solver.GetSplineByWaypoints(waypoints, minimize_derivative, spline) !=
-      kSuccess) {
-    printf("[OptimalSplineBySampleInterpolation]Solver failed.\n");
-    return kWrongStatus;
-  }
-  return kSuccess;
-}
-
-template <int N_DEG, int N_DIM>
 ErrorType SplineGenerator<N_DEG, N_DIM>::GetWaypointsFromPositionSamples(
     const vec_Vecf<N_DIM>& samples, const std::vector<decimal_t>& para,
     vec_E<Waypoint<N_DIM>>* waypoints) {

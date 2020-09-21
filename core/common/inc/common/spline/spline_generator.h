@@ -8,7 +8,6 @@
 #include "common/basics/shapes.h"
 #include "common/math/calculations.h"
 #include "common/solver/qp_solver.h"
-#include "common/solver/unqp_solver.h"
 #include "common/spline/bezier.h"
 #include "common/spline/lookup_table.h"
 #include "common/spline/polynomial.h"
@@ -48,20 +47,6 @@ class SplineGenerator {
       const vec_Vecf<N_DIM>& samples, const std::vector<decimal_t>& para,
       const Eigen::ArrayXf& breaks, const decimal_t regulator,
       SplineType* spline);
-
-  /**
-   * @brief Return optimal spline interpolation by minimizing squared integral
-   * of derivatives using unconstrained qp
-   * @param samples, the points you want to interterpolate (enforce position
-   * constraints)
-   * @param para, the parameterization used to evaluate the spline
-   * @param minimize_derivative, the derivative you want to minimize
-   * @param spline, the spline returned (wrap in the general N_DEG spline)
-   * @note this may be an expensive function depending on the number of samples
-   */
-  static ErrorType GetOptimalSplineBySampleInterpolation(
-      const vec_Vecf<N_DIM>& samples, const std::vector<decimal_t>& para,
-      const int minimize_derivative, SplineType* spline);
 
   /**
    * @brief Return waypoints from position samples
