@@ -48,7 +48,6 @@ include_directories(
 add_library(hkust_pl_eudm
     src/eudm_planner/eudm_planner.cc
     src/eudm_planner/map_adapter.cc
-    src/eudm_planner/eudm_impl.cc
     src/eudm_planner/eudm_manager.cc
     src/eudm_planner/dcp_tree.cc
     ${PROTO_SRCS}
@@ -59,7 +58,6 @@ target_link_libraries(hkust_pl_eudm
 
 add_library(hkust_eudm_ros
     src/eudm_planner/eudm_server_ros.cc
-    #src/eudm_planner/map_adapter.cc
 )
 target_link_libraries(hkust_eudm_ros
     hkust_pl_eudm

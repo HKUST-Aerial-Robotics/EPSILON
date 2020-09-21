@@ -44,7 +44,6 @@ add_library(hkust_pl_ssc
     src/ssc_planner/ssc_planner.cc
     src/ssc_planner/ssc_map.cc
     src/ssc_planner/map_adapter.cc
-    src/ssc_planner/ssc_impl.cc
     ${PROTO_SRCS}
 )
 target_link_libraries(hkust_pl_ssc PRIVATE
