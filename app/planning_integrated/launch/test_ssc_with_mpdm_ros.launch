@@ -3,9 +3,7 @@
   <arg name="arena_info_dynamic_topic" value="/arena_info_dynamic" />
   <arg name="ctrl_topic" value="/ctrl/agent_0" />
 
-  <arg name="playground" value = "highway_v1.0" />
-  <!-- <arg name="playground" value = "ring_tiny_v1.0" /> -->
-  <!-- <arg name="playground" value = "ring_small_v1.0" /> -->
+  <arg name="playground" value = "highway_lite" />
 
   <node pkg="planning_integrated" type="test_ssc_with_mpdm" name="test_ssc_with_mpdm_0" output="screen">
     <param name="ego_id" type="int" value="0" />

@@ -31,7 +31,7 @@ struct AgentConfigInfo {
   bool enable_openloop_prediction{false};
   bool enable_tracking_noise{false};
   bool enable_log{false};
-  bool enable_fast_lane_lut{false};
+  bool enable_fast_lane_lut{true};
   std::string log_file;
 
   void PrintInfo() {

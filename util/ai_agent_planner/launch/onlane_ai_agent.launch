@@ -7,9 +7,7 @@
   <arg name="global_autonomous_level" value = "2" />
   <arg name="global_aggressiveness_level" value = "4" />
 
-  <arg name="playground" value = "highway_v1.0" />
-  <!-- <arg name="playground" value = "ring_tiny_v1.0" /> -->
-  <!-- <arg name="playground" value = "ring_small_v1.0" /> -->
+  <arg name="playground" value = "highway_lite" />
 
   <node pkg="ai_agent_planner" type="onlane_ai_agent" name="onlane_ai_agent_1" output="screen">
     <param name="ego_id" type="int" value="1" />
