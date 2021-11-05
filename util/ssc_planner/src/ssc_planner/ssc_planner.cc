@@ -13,8 +13,6 @@
 #include <google/protobuf/text_format.h>
 #include <omp.h>
 
-#include "common/trajectory/trajectory_optimizer.h"
-
 // ! Performance can be significantly influenced by multi-core task scheduling
 #define USE_OPENMP 0
 

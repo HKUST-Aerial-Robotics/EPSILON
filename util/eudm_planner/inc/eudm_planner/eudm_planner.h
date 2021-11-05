@@ -7,7 +7,6 @@
 #include <thread>
 
 #include "common/basics/basics.h"
-#include "common/basics/ma_filter.h"
 #include "common/interface/planner.h"
 #include "common/lane/lane.h"
 #include "common/lane/lane_generator.h"

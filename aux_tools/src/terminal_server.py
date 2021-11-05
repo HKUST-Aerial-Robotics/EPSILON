@@ -12,6 +12,7 @@ import rospy
 import shutil
 import random
 from math import *
+from functools import reduce
 # pygame
 import pygame as pg
 from pygame.locals import *
@@ -231,7 +232,7 @@ def init_joy(frame_id):
     for i in range(8):
         joy.axes.append(0.0)
     for i in range(11):
-        joy.buttons.append(0.0)
+        joy.buttons.append(0)
     return joy
 
 

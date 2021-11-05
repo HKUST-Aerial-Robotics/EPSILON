@@ -4,7 +4,7 @@
 
   <include file="$(find phy_simulator)/launch/joy_ctrl.launch"/>
 
-  <arg name="playground" value = "highway_lite" />
+  <arg name="playground" value = "highway_v1.0" />
 
   <node pkg="phy_simulator" name="phy_simulator_planning_node" type="phy_simulator_planning_node" output="screen">
     <param name="vehicle_info_path" type="string" value="$(find playgrounds)/$(arg playground)/vehicle_set.json" />

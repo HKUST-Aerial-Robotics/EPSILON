@@ -58,9 +58,9 @@
         "subclass": "car",
         "type": "VehicleWithBicycleKinematics",
         "init_state": {
-          "x": 26.7146,
-          "y": -80.6042,
-          "angle": -0.974405,
+          "x": 25.618,
+          "y": -72.566,
+          "angle": -0.973,
           "curvature": -0.000711,
           "velocity": 0.0,
           "acceleration": 0.0,

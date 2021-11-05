@@ -4,9 +4,7 @@
  * @brief
  * @version 0.1
  * @date 2020-09-21
- *
  * @copyright Copyright (c) 2020
- *
  */
 #include <ros/ros.h>
 #include <stdlib.h>

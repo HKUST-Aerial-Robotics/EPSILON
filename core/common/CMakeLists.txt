@@ -12,12 +12,13 @@ find_package(catkin REQUIRED COMPONENTS
     roscpp
     visualization_msgs
     sensor_msgs
-    tf)
+    tf
+)
 
 find_package(Protobuf REQUIRED)
 set(THIRD_PARTY_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/thirdparty)
 set(THIRD_PARTY_INCLUDE_DIRS  ${THIRD_PARTY_INCLUDE_DIRS} ${PROTOBUF_INCLUDE_DIR})
-set(ooqp_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/thirdparty/ooqp/include/ooqp)
+set(OOQP_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/thirdparty/ooqp/include/ooqp)
 set(PROTOBUF_GENERATE_CPP_APPEND_PATH TRUE PARENT_SCOPE)
 
 find_package(Eigen3 REQUIRED)
@@ -29,16 +30,10 @@ if(NOT OOQP_FOUND)
     message(FATAL_ERROR "OOQP not found.")
 endif()
 
-find_package(Nlopt REQUIRED)
-if(NOT NLOPT_FOUND)
-    message(FATAL_ERROR "NLOPT not found.")
-endif()
-# find_package(Ceres REQUIRED)
-
 #if this catkin packge's header is used by other packages, use catkin_package to
 #declare the include directories of this package.
 catkin_package(
-    INCLUDE_DIRS inc ${THIRD_PARTY_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR} ${ooqp_INCLUDE_DIRS}
+    INCLUDE_DIRS inc ${THIRD_PARTY_INCLUDE_DIRS} ${EIGEN3_INCLUDE_DIR} ${OOQP_INCLUDE_DIRS}
     LIBRARIES hkust_pl_common
     CATKIN_DEPENDS roscpp visualization_msgs sensor_msgs tf
 )
@@ -47,8 +42,6 @@ set(THIRD_PARTY_LIBRARIES
     dw
     ${GLOG_LIBRARIES}
     ${PROTOBUF_LIBRARY}
-    ${NLOPT_LIBRARIES}
-    # ${CERES_LIBRARIES}
 )
 
 include_directories(
@@ -56,9 +49,7 @@ include_directories(
     ${catkin_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIR}
     ${THIRD_PARTY_INCLUDE_DIRS}
-    ${ooqp_INCLUDE_DIRS}
-    ${NLOPT_INCLUDE_DIRS}
-    # ${CERES_INCLUDE_DIRS}
+    ${OOQP_INCLUDE_DIRS}
 )
 
 add_library(hkust_pl_ooqp_itf
@@ -87,7 +78,6 @@ set(COMMON_SRC
     src/common/state/free_state.cc
     src/common/circle_arc/circle_arc.cc
     src/common/circle_arc/circle_arc_branch.cc
-    src/common/trajectory/trajectory_optimizer.cc
 )
 
 add_library(hkust_pl_common
