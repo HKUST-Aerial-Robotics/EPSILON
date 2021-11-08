@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
     tf
 )
 
+find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(common REQUIRED)
 find_package(motion_predictor REQUIRED)
@@ -39,6 +40,7 @@ include_directories(
     ${motion_predictor_INCLUDE_DIRS}
     ${catkin_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIR}
+    ${OpenCV_INCLUDE_DIRS}
 )
 
 add_library(hkust_pl_smm
@@ -51,6 +53,7 @@ target_link_libraries(hkust_pl_smm
     ${vehicle_model_LIBRARIES}
     ${common_LIBRARIES}
     ${motion_predictor_LIBRARIES}
+    ${OpenCV_LIBS}
 )
 
 add_library(hkust_smm_ros
