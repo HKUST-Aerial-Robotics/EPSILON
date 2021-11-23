@@ -26,7 +26,7 @@ DcpTree::DcpTree(const int& tree_height, const decimal_t& layer_time,
   GenerateActionScript();
 }
 
-ErrorType DcpTree::UpdateScript() { GenerateActionScript(); }
+ErrorType DcpTree::UpdateScript() { return GenerateActionScript(); }
 
 std::vector<DcpTree::DcpAction> DcpTree::AppendActionSequence(
     const std::vector<DcpAction>& seq_in, const DcpAction& a,
