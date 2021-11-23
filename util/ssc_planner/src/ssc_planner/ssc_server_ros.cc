@@ -105,7 +105,7 @@ void SscPlannerServer::PublishData() {
       }
       int num_traj_mks = static_cast<int>(traj_mk_arr.markers.size());
       common::VisualizationUtil::FillHeaderIdInMarkerArray(
-          ros::Time(current_time), std::string("/map"), last_trajmk_cnt_,
+          ros::Time(current_time), std::string("map"), last_trajmk_cnt_,
           &traj_mk_arr);
       last_trajmk_cnt_ = num_traj_mks;
       executing_traj_vis_pub_.publish(traj_mk_arr);

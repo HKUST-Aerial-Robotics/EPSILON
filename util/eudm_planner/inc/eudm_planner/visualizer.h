@@ -81,7 +81,7 @@ class EudmPlannerVisualizer {
     }
     int num_markers = static_cast<int>(traj_list_marker.markers.size());
     common::VisualizationUtil::FillHeaderIdInMarkerArray(
-        stamp, std::string("/map"), last_forward_trajs_marker_cnt_,
+        stamp, std::string("map"), last_forward_trajs_marker_cnt_,
         &traj_list_marker);
     last_forward_trajs_marker_cnt_ = num_markers;
     forward_traj_vis_pub_.publish(traj_list_marker);
