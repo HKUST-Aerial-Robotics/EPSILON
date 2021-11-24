@@ -34,7 +34,7 @@ class Encoder {
       const common::FreeState &in_state, const ros::Time &timestamp,
       vehicle_msgs::FreeState *state) {
     state->header.stamp = timestamp;
-    state->header.frame_id = std::string("/map");
+    state->header.frame_id = std::string("map");
     state->pos.x = in_state.position[0];
     state->pos.y = in_state.position[1];
     state->vel.x = in_state.velocity[0];
@@ -49,7 +49,7 @@ class Encoder {
                                            const ros::Time &timestamp,
                                            vehicle_msgs::State *state) {
     state->header.stamp = timestamp;
-    state->header.frame_id = std::string("/map");
+    state->header.frame_id = std::string("map");
     state->vec_position.x = in_state.vec_position[0];
     state->vec_position.y = in_state.vec_position[1];
     state->angle = in_state.angle;

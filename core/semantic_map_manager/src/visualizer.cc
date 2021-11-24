@@ -119,7 +119,7 @@ void Visualizer::VisualizeSurroundingVehicles(
   }
   int num_markers = static_cast<int>(vehicle_marker_list.markers.size());
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      stamp, std::string("/map"), last_surrounding_vehicle_marker_cnt_,
+      stamp, std::string("map"), last_surrounding_vehicle_marker_cnt_,
       &vehicle_marker_list);
   last_surrounding_vehicle_marker_cnt_ = num_markers;
   surrounding_vehicle_vis_pub_.publish(vehicle_marker_list);
@@ -233,7 +233,7 @@ void Visualizer::VisualizeSurroundingLaneNet(
   // }
   int num_markers = static_cast<int>(lane_net_marker.markers.size());
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      stamp, std::string("/map"), last_surrounding_lanes_cnt_,
+      stamp, std::string("map"), last_surrounding_lanes_cnt_,
       &lane_net_marker);
   last_surrounding_lanes_cnt_ = num_markers;
   surrounding_lane_net_pub_.publish(lane_net_marker);
@@ -262,7 +262,7 @@ void Visualizer::VisualizeLocalLanes(
     mks.markers.push_back(mk);
   }
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      stamp, std::string("/map"), last_mks_num, &mks);
+      stamp, std::string("map"), last_mks_num, &mks);
   last_mks_num = mks.markers.size();
   local_lanes_pub_.publish(mks);
 }
@@ -277,7 +277,7 @@ void Visualizer::VisualizeBehavior(const ros::Time &stamp,
 
   int num_markers = static_cast<int>(behavior_marker_arr.markers.size());
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      stamp, std::string("/map"), last_behavior_marker_cnt_,
+      stamp, std::string("map"), last_behavior_marker_cnt_,
       &behavior_marker_arr);
   last_behavior_marker_cnt_ = num_markers;
 
@@ -354,7 +354,7 @@ void Visualizer::VisualizeSpeedLimit(
   }
   int num_markers = static_cast<int>(traffic_signal_arr.markers.size());
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      stamp, std::string("/map"), last_speed_limit_marker_cnt_,
+      stamp, std::string("map"), last_speed_limit_marker_cnt_,
       &traffic_signal_arr);
   last_speed_limit_marker_cnt_ = num_markers;
   speed_limit_vis_pub_.publish(traffic_signal_arr);
@@ -410,7 +410,7 @@ void Visualizer::VisualizeIntentionPrediction(
   }
   int num_mks = static_cast<int>(mks.markers.size());
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      stamp, std::string("/map"), last_intention_marker_cnt_, &mks);
+      stamp, std::string("map"), last_intention_marker_cnt_, &mks);
   last_intention_marker_cnt_ = num_mks;
   pred_intention_vis_pub_.publish(mks);
 }
@@ -440,7 +440,7 @@ void Visualizer::VisualizeOpenloopTrajPrediction(
   }
   int num_mks = static_cast<int>(mks.markers.size());
   common::VisualizationUtil::FillHeaderIdInMarkerArray(
-      stamp, std::string("/map"), last_traj_list_marker_cnt_, &mks);
+      stamp, std::string("map"), last_traj_list_marker_cnt_, &mks);
   last_traj_list_marker_cnt_ = num_mks;
   pred_traj_openloop_vis_pub_.publish(mks);
 }
